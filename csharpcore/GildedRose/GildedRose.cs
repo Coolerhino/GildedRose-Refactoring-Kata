@@ -14,59 +14,59 @@ namespace GildedRoseKata
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (!IsAgedBrie(i) && !IsBackstagePass(i))
                 {
                     if (Items[i].Quality > 0)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        if (!IsSulfuras(i))
                         {
-                            Items[i].Quality = Items[i].Quality - 1;
+                            DecreaseQuality(i);
                         }
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (QualityLessThan50(i))
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
+                        IncreaseQuality(i);
 
                         if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
                             if (Items[i].SellIn < 11)
                             {
-                                if (Items[i].Quality < 50)
+                                if (QualityLessThan50(i))
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    IncreaseQuality(i);
                                 }
                             }
 
                             if (Items[i].SellIn < 6)
                             {
-                                if (Items[i].Quality < 50)
+                                if (QualityLessThan50(i))
                                 {
-                                    Items[i].Quality = Items[i].Quality + 1;
+                                    IncreaseQuality(i);
                                 }
                             }
                         }
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (!IsSulfuras(i))
                 {
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
                 if (Items[i].SellIn < 0)
                 {
-                    if (Items[i].Name != "Aged Brie")
+                    if (!IsAgedBrie(i))
                     {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (!IsBackstagePass(i))
                         {
                             if (Items[i].Quality > 0)
                             {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                                if (!IsSulfuras(i))
                                 {
-                                    Items[i].Quality = Items[i].Quality - 1;
+                                    DecreaseQuality(i);
                                 }
                             }
                         }
@@ -77,13 +77,43 @@ namespace GildedRoseKata
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (QualityLessThan50(i))
                         {
-                            Items[i].Quality = Items[i].Quality + 1;
+                            IncreaseQuality(i);
                         }
                     }
                 }
             }
+        }
+
+        private bool IsSulfuras(int i)
+        {
+            return Items[i].Name == "Sulfuras, Hand of Ragnaros";
+        }
+
+        private bool IsBackstagePass(int i)
+        {
+            return Items[i].Name == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        private bool IsAgedBrie(int i)
+        {
+            return Items[i].Name == "Aged Brie";
+        }
+
+        private bool QualityLessThan50(int i)
+        {
+            return Items[i].Quality < 50;
+        }
+
+        private void IncreaseQuality(int i)
+        {
+            Items[i].Quality = Items[i].Quality + 1;
+        }
+
+        private void DecreaseQuality(int i)
+        {
+            Items[i].Quality = Items[i].Quality - 1;
         }
     }
 }
