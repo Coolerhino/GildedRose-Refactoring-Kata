@@ -41,27 +41,33 @@ namespace GildedRoseKata
                     HandleBackstagePass(i);
                 }
 
-                if (Items[i].SellIn < 0)
+                if (IsAgedBrie(i))
                 {
-                    if (IsAgedBrie(i))
+                    if (Items[i].SellIn < 0)
                     {
                         if (QualityLessThan50(i))
                         {
                             IncreaseQuality(i);
                         }
                     }
-                    else if (IsBackstagePass(i))
+                }
+                else if (IsBackstagePass(i))
+                {
+                    if (Items[i].SellIn < 0)
                     {
                         Items[i].Quality = Items[i].Quality - Items[i].Quality;
                     }
-                    else
+                }
+                else if (IsSulfuras(i))
+                {
+                }
+                else if (IsGeneric(i))
+                {
+                    if (Items[i].SellIn < 0)
                     {
                         if (Items[i].Quality > 0)
                         {
-                            if (!IsSulfuras(i))
-                            {
-                                DecreaseQuality(i);
-                            }
+                            DecreaseQuality(i);
                         }
                     }
                 }
