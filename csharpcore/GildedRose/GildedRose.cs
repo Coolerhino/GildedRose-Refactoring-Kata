@@ -5,6 +5,7 @@ namespace GildedRoseKata
     public class GildedRose
     {
         IList<Item> Items;
+
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
@@ -14,13 +15,17 @@ namespace GildedRoseKata
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (IsSulfuras(i)){}
+                if (IsSulfuras(i))
+                {
+                }
                 else if (IsGeneric(i))
                 {
                     if (Items[i].Quality > 0)
                     {
                         DecreaseQuality(i);
                     }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
                 }
                 else if (IsAgedBrie(i))
                 {
@@ -28,41 +33,35 @@ namespace GildedRoseKata
                     {
                         IncreaseQuality(i);
                     }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
                 }
-                else if(IsBackstagePass(i))
+                else if (IsBackstagePass(i))
                 {
                     HandleBackstagePass(i);
                 }
 
-                if (!IsSulfuras(i))
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
                 if (Items[i].SellIn < 0)
                 {
-                    if (!IsAgedBrie(i))
-                    {
-                        if (!IsBackstagePass(i))
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (!IsSulfuras(i))
-                                {
-                                    DecreaseQuality(i);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
+                    if (IsAgedBrie(i))
                     {
                         if (QualityLessThan50(i))
                         {
                             IncreaseQuality(i);
+                        }
+                    }
+                    else if (IsBackstagePass(i))
+                    {
+                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                    }
+                    else
+                    {
+                        if (Items[i].Quality > 0)
+                        {
+                            if (!IsSulfuras(i))
+                            {
+                                DecreaseQuality(i);
+                            }
                         }
                     }
                 }
@@ -90,13 +89,15 @@ namespace GildedRoseKata
                     }
                 }
             }
+
+            Items[i].SellIn = Items[i].SellIn - 1;
         }
 
         private bool IsGeneric(int i)
         {
             return !(IsSulfuras(i) || IsBackstagePass(i) || IsAgedBrie(i));
         }
-        
+
         private bool IsSulfuras(int i)
         {
             return Items[i].Name == "Sulfuras, Hand of Ragnaros";
