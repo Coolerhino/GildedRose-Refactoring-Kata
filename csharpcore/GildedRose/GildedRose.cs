@@ -14,7 +14,8 @@ namespace GildedRoseKata
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (!IsAgedBrie(i) && !IsBackstagePass(i))
+                if (IsSulfuras(i)){}
+                else if (IsGeneric(i))
                 {
                     if (Items[i].Quality > 0)
                     {
@@ -86,6 +87,11 @@ namespace GildedRoseKata
             }
         }
 
+        private bool IsGeneric(int i)
+        {
+            return !(IsSulfuras(i) || IsBackstagePass(i) || IsAgedBrie(i));
+        }
+        
         private bool IsSulfuras(int i)
         {
             return Items[i].Name == "Sulfuras, Hand of Ragnaros";
