@@ -19,37 +19,19 @@ namespace GildedRoseKata
                 {
                     if (Items[i].Quality > 0)
                     {
-                        if (!IsSulfuras(i))
-                        {
-                            DecreaseQuality(i);
-                        }
+                        DecreaseQuality(i);
                     }
                 }
-                else
+                else if (IsAgedBrie(i))
                 {
                     if (QualityLessThan50(i))
                     {
                         IncreaseQuality(i);
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (QualityLessThan50(i))
-                                {
-                                    IncreaseQuality(i);
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (QualityLessThan50(i))
-                                {
-                                    IncreaseQuality(i);
-                                }
-                            }
-                        }
                     }
+                }
+                else if(IsBackstagePass(i))
+                {
+                    HandleBackstagePass(i);
                 }
 
                 if (!IsSulfuras(i))
@@ -82,6 +64,29 @@ namespace GildedRoseKata
                         {
                             IncreaseQuality(i);
                         }
+                    }
+                }
+            }
+        }
+
+        private void HandleBackstagePass(int i)
+        {
+            if (QualityLessThan50(i))
+            {
+                IncreaseQuality(i);
+                if (Items[i].SellIn < 11)
+                {
+                    if (QualityLessThan50(i))
+                    {
+                        IncreaseQuality(i);
+                    }
+                }
+
+                if (Items[i].SellIn < 6)
+                {
+                    if (QualityLessThan50(i))
+                    {
+                        IncreaseQuality(i);
                     }
                 }
             }
