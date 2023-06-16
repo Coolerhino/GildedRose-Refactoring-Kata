@@ -20,56 +20,50 @@ namespace GildedRoseKata
                 }
                 else if (IsGeneric(i))
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        DecreaseQuality(i);
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    HandleGeneric(i);
                 }
                 else if (IsAgedBrie(i))
                 {
-                    if (QualityLessThan50(i))
-                    {
-                        IncreaseQuality(i);
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    HandleAgedBrie(i);
                 }
                 else if (IsBackstagePass(i))
                 {
                     HandleBackstagePass(i);
                 }
+            }
+        }
 
-                if (IsAgedBrie(i))
+        private void HandleAgedBrie(int i)
+        {
+            if (QualityLessThan50(i))
+            {
+                IncreaseQuality(i);
+            }
+
+            Items[i].SellIn = Items[i].SellIn - 1;
+            if (Items[i].SellIn < 0)
+            {
+                if (QualityLessThan50(i))
                 {
-                    if (Items[i].SellIn < 0)
-                    {
-                        if (QualityLessThan50(i))
-                        {
-                            IncreaseQuality(i);
-                        }
-                    }
+                    IncreaseQuality(i);
                 }
-                else if (IsBackstagePass(i))
+            }
+        }
+
+        private void HandleGeneric(int i)
+        {
+            if (Items[i].Quality > 0)
+            {
+                DecreaseQuality(i);
+            }
+
+            Items[i].SellIn = Items[i].SellIn - 1;
+
+            if (Items[i].SellIn < 0)
+            {
+                if (Items[i].Quality > 0)
                 {
-                    if (Items[i].SellIn < 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                    }
-                }
-                else if (IsSulfuras(i))
-                {
-                }
-                else if (IsGeneric(i))
-                {
-                    if (Items[i].SellIn < 0)
-                    {
-                        if (Items[i].Quality > 0)
-                        {
-                            DecreaseQuality(i);
-                        }
-                    }
+                    DecreaseQuality(i);
                 }
             }
         }
@@ -97,6 +91,10 @@ namespace GildedRoseKata
             }
 
             Items[i].SellIn = Items[i].SellIn - 1;
+            if (Items[i].SellIn < 0)
+            {
+                Items[i].Quality = Items[i].Quality - Items[i].Quality;
+            }
         }
 
         private bool IsGeneric(int i)
