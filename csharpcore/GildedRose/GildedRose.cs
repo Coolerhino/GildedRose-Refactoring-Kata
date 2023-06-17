@@ -2,6 +2,23 @@
 
 namespace GildedRoseKata
 {
+    public class Sulfuras
+    {
+        public int Quality { get; private set; }
+
+        public int SellIn { get; private set; }
+        
+        public Sulfuras(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+        
+        public void Update()
+        {
+        }
+    }
+    
     public class Generic
     {
         public int Quality { get; private set; }
@@ -120,6 +137,10 @@ namespace GildedRoseKata
             {
                 if (IsSulfuras(i))
                 {
+                    var sulfuras = new Sulfuras(Items[i].Quality, Items[i].SellIn);
+                    sulfuras.Update();
+                    Items[i].Quality = sulfuras.Quality;
+                    Items[i].SellIn = sulfuras.SellIn;
                 }
                 else if (IsGeneric(i))
                 {
