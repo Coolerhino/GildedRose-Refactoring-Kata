@@ -31,7 +31,78 @@ namespace GildedRoseKata
                 }
             }
         }
+    }
+    
+    public class AgedBrie
+    {
+        public int Quality { get; private set; }
 
+        public int SellIn { get; private set; }
+        
+        public AgedBrie(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+
+        public void Update()
+        {
+            if (Quality < 50)
+            {
+                Quality = Quality + 1;
+            }
+
+            SellIn = SellIn - 1;
+            if (SellIn < 0)
+            {
+                if (Quality < 50)
+                {
+                    Quality = Quality + 1;
+                }
+            }
+        }
+    }
+    
+    public class BackstagePass
+    {
+        public int Quality { get; private set; }
+
+        public int SellIn { get; private set; }
+        
+        public BackstagePass(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+
+        public void Update()
+        {
+            if (Quality < 50)
+            {
+                Quality = Quality + 1;
+                if (SellIn < 11)
+                {
+                    if (Quality < 50)
+                    {
+                        Quality = Quality + 1;
+                    }
+                }
+
+                if (SellIn < 6)
+                {
+                    if (Quality < 50)
+                    {
+                        Quality = Quality + 1;
+                    }
+                }
+            }
+
+            SellIn = SellIn - 1;
+            if (SellIn < 0)
+            {
+                Quality = Quality - Quality;
+            }
+        }
     }
     
     public class GildedRose
@@ -56,64 +127,20 @@ namespace GildedRoseKata
                     generic.Update();
                     Items[i].Quality = generic.Quality;
                     Items[i].SellIn = generic.SellIn;
-                    if (Items[i].Quality > 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
-
-                    if (Items[i].SellIn < 0)
-                    {
-                        if (Items[i].Quality > 0)
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
                 }
                 else if (IsAgedBrie(i))
                 {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                    if (Items[i].SellIn < 0)
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
+                    var agedBrie = new AgedBrie(Items[i].Quality, Items[i].SellIn);
+                    agedBrie.Update();
+                    Items[i].Quality = agedBrie.Quality;
+                    Items[i].SellIn = agedBrie.SellIn;
                 }
                 else if (IsBackstagePass(i))
                 {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-                        if (Items[i].SellIn < 11)
-                        {
-                            if (Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-                        }
-
-                        if (Items[i].SellIn < 6)
-                        {
-                            if (Items[i].Quality < 50)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
-                        }
-                    }
-
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                    if (Items[i].SellIn < 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                    }
+                    var backstagePass = new BackstagePass(Items[i].Quality, Items[i].SellIn);
+                    backstagePass.Update();
+                    Items[i].Quality = backstagePass.Quality;
+                    Items[i].SellIn = backstagePass.SellIn;
                 }
             }
         }
