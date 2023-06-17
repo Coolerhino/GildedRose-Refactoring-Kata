@@ -20,80 +20,65 @@ namespace GildedRoseKata
                 }
                 else if (IsGeneric(i))
                 {
-                    HandleGeneric(i);
+                    if (Items[i].Quality > 0)
+                    {
+                        Items[i].Quality = Items[i].Quality - 1;
+                    }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
+
+                    if (Items[i].SellIn < 0)
+                    {
+                        if (Items[i].Quality > 0)
+                        {
+                            Items[i].Quality = Items[i].Quality - 1;
+                        }
+                    }
                 }
                 else if (IsAgedBrie(i))
                 {
-                    HandleAgedBrie(i);
+                    if (Items[i].Quality < 50)
+                    {
+                        Items[i].Quality = Items[i].Quality + 1;
+                    }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
+                    if (Items[i].SellIn < 0)
+                    {
+                        if (Items[i].Quality < 50)
+                        {
+                            Items[i].Quality = Items[i].Quality + 1;
+                        }
+                    }
                 }
                 else if (IsBackstagePass(i))
                 {
-                    HandleBackstagePass(i);
-                }
-            }
-        }
-
-        private void HandleAgedBrie(int i)
-        {
-            if (QualityLessThan50(i))
-            {
-                IncreaseQuality(i);
-            }
-
-            Items[i].SellIn = Items[i].SellIn - 1;
-            if (Items[i].SellIn < 0)
-            {
-                if (QualityLessThan50(i))
-                {
-                    IncreaseQuality(i);
-                }
-            }
-        }
-
-        private void HandleGeneric(int i)
-        {
-            if (Items[i].Quality > 0)
-            {
-                DecreaseQuality(i);
-            }
-
-            Items[i].SellIn = Items[i].SellIn - 1;
-
-            if (Items[i].SellIn < 0)
-            {
-                if (Items[i].Quality > 0)
-                {
-                    DecreaseQuality(i);
-                }
-            }
-        }
-
-        private void HandleBackstagePass(int i)
-        {
-            if (QualityLessThan50(i))
-            {
-                IncreaseQuality(i);
-                if (Items[i].SellIn < 11)
-                {
-                    if (QualityLessThan50(i))
+                    if (Items[i].Quality < 50)
                     {
-                        IncreaseQuality(i);
+                        Items[i].Quality = Items[i].Quality + 1;
+                        if (Items[i].SellIn < 11)
+                        {
+                            if (Items[i].Quality < 50)
+                            {
+                                Items[i].Quality = Items[i].Quality + 1;
+                            }
+                        }
+
+                        if (Items[i].SellIn < 6)
+                        {
+                            if (Items[i].Quality < 50)
+                            {
+                                Items[i].Quality = Items[i].Quality + 1;
+                            }
+                        }
+                    }
+
+                    Items[i].SellIn = Items[i].SellIn - 1;
+                    if (Items[i].SellIn < 0)
+                    {
+                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
                     }
                 }
-
-                if (Items[i].SellIn < 6)
-                {
-                    if (QualityLessThan50(i))
-                    {
-                        IncreaseQuality(i);
-                    }
-                }
-            }
-
-            Items[i].SellIn = Items[i].SellIn - 1;
-            if (Items[i].SellIn < 0)
-            {
-                Items[i].Quality = Items[i].Quality - Items[i].Quality;
             }
         }
 
@@ -115,21 +100,6 @@ namespace GildedRoseKata
         private bool IsAgedBrie(int i)
         {
             return Items[i].Name == "Aged Brie";
-        }
-
-        private bool QualityLessThan50(int i)
-        {
-            return Items[i].Quality < 50;
-        }
-
-        private void IncreaseQuality(int i)
-        {
-            Items[i].Quality = Items[i].Quality + 1;
-        }
-
-        private void DecreaseQuality(int i)
-        {
-            Items[i].Quality = Items[i].Quality - 1;
         }
     }
 }
