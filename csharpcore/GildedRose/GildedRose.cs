@@ -7,11 +7,7 @@ namespace GildedRoseKata
     {
         public IGoodCategory BuildFor(Item item)
         {
-            if (IsSulfuras(item))
-            {
-                return new Sulfuras(item.Quality, item.SellIn);
-            }
-            else if (IsAgedBrie(item))
+            if (IsAgedBrie(item))
             {
                 return new AgedBrie(item.Quality, item.SellIn);
             }
@@ -28,12 +24,7 @@ namespace GildedRoseKata
         
         private bool IsGeneric(Item i)
         {
-            return !(IsSulfuras(i) || IsBackstagePass(i) || IsAgedBrie(i));
-        }
-
-        private bool IsSulfuras(Item i)
-        {
-            return i.Name == "Sulfuras, Hand of Ragnaros";
+            return !(IsBackstagePass(i) || IsAgedBrie(i));
         }
 
         private bool IsBackstagePass(Item i)
@@ -60,11 +51,17 @@ namespace GildedRoseKata
         {
             for (var i = 0; i < Items.Count; i++)
             {
+                if (IsSulfuras(Items[i])) continue;
                 var item = new GoodCategory().BuildFor(Items[i]);
                 item.Update();
                 Items[i].Quality = item.Quality;
                 Items[i].SellIn = item.SellIn;
             }
+        }
+        
+        private bool IsSulfuras(Item i)
+        {
+            return i.Name == "Sulfuras, Hand of Ragnaros";
         }
     }
 }
