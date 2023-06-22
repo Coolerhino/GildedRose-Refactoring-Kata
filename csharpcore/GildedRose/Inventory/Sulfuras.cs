@@ -2,13 +2,13 @@
 
 public class Sulfuras : IGoodCategory
 {
-    public int Quality { get; private set; }
+    public Quality Quality { get; private set; }
 
     public int SellIn { get; private set; }
 
     public Sulfuras(int quality, int sellIn)
     {
-        Quality = quality;
+        Quality = new Quality(quality);
         SellIn = sellIn;
     }
         

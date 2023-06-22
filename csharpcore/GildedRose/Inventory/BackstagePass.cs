@@ -2,42 +2,36 @@
 
 public class BackstagePass : IGoodCategory
 {
-    public int Quality { get; private set; }
+    public Quality Quality { get; private set; }
 
     public int SellIn { get; private set; }
         
     public BackstagePass(int quality, int sellIn)
     {
-        Quality = quality;
+        Quality = new Quality(quality);
         SellIn = sellIn;
     }
 
     public void Update()
     {
-        if (Quality < 50)
+        Quality.Increase();
+        if (Quality.IsLessThan50())
         {
-            Quality = Quality + 1;
             if (SellIn < 11)
             {
-                if (Quality < 50)
-                {
-                    Quality = Quality + 1;
-                }
+                Quality.Increase();
             }
 
             if (SellIn < 6)
             {
-                if (Quality < 50)
-                {
-                    Quality = Quality + 1;
-                }
+                Quality.Increase();
             }
         }
 
         SellIn = SellIn - 1;
         if (SellIn < 0)
         {
-            Quality = Quality - Quality;
+            Quality.Reset();
         }
     }
 }
