@@ -14,6 +14,7 @@ namespace GildedRoseTests
         [InlineData(22, 8, 20)]
         [InlineData(23, 4, 20)]
         [InlineData(0, 0, 20)]
+        [InlineData(23, 1, 20)]
         public void assert_backstage_pass_quality(int expected, int sellIn, int quality)
         {
             var items = new List<Item>
