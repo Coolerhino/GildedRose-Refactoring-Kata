@@ -30,6 +30,7 @@ namespace GildedRoseTests
         
         [Theory]
         [InlineData(22, 0, 20)]
+        [InlineData(21, 1, 20)]
         public void assert_aged_brie_quality(int expected, int sellIn, int quality)
         {
             var items = new List<Item>
