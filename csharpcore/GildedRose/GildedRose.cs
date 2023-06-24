@@ -5,37 +5,12 @@ namespace GildedRoseKata
 {
     public class GoodCategory
     {
-        public IGoodCategory BuildFor(Item item)
+        public IGoodCategory BuildFor(Item item) => item.Name switch
         {
-            if (IsAgedBrie(item))
-            {
-                return new AgedBrie(item.Quality, item.SellIn);
-            }
-            else if (IsBackstagePass(item))
-            {
-                return new BackstagePass(item.Quality, item.SellIn);
-            }
-            else if (IsGeneric(item))
-            {
-                return new Generic(item.Quality, item.SellIn);
-            }
-            return null;
-        }
-        
-        private bool IsGeneric(Item i)
-        {
-            return !(IsBackstagePass(i) || IsAgedBrie(i));
-        }
-
-        private bool IsBackstagePass(Item i)
-        {
-            return i.Name == "Backstage passes to a TAFKAL80ETC concert";
-        }
-
-        private bool IsAgedBrie(Item i)
-        {
-            return i.Name == "Aged Brie";
-        }
+            "Backstage passes to a TAFKAL80ETC concert" => new BackstagePass(item.Quality, item.SellIn),
+            "Aged Brie" => new AgedBrie(item.Quality, item.SellIn),
+            _ => new Generic(item.Quality, item.SellIn)
+        };
     }
     
     public class GildedRose
