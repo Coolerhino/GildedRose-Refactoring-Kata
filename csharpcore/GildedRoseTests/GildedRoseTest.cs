@@ -42,13 +42,16 @@ namespace GildedRoseTests
             Assert.Equal(expected, items[0].Quality);
         }
         
-        [Fact]
-        public void test_generic()
+        [Theory]
+        [InlineData(1, -1, 3)]
+        [InlineData(1, 0, 3)]
+        [InlineData(2, 1, 3)]
+        public void assert_generic_quality(int expected, int sellIn, int quality)
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = -1, Quality = 3 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = sellIn, Quality = quality } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
-            Assert.Equal("foo", Items[0].Name);
+            Assert.Equal(expected, Items[0].Quality);
         }
         
         [Fact]
