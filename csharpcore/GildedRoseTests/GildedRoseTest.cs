@@ -46,6 +46,7 @@ namespace GildedRoseTests
         [InlineData(1, -1, 3)]
         [InlineData(1, 0, 3)]
         [InlineData(2, 1, 3)]
+        [InlineData(0, 1, 0)]
         public void assert_generic_quality(int expected, int sellIn, int quality)
         {
             IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = sellIn, Quality = quality } };
