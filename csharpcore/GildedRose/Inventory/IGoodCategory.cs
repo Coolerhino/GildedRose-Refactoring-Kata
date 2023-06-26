@@ -3,6 +3,5 @@
 public interface IGoodCategory
 {
     public Quality Quality { get; }
-    public int SellIn{ get; }
-    public void Update();
+    public void Update(int sellIn);
 }

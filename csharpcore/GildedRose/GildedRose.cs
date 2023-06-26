@@ -7,9 +7,9 @@ namespace GildedRoseKata
     {
         public IGoodCategory BuildFor(Item item) => item.Name switch
         {
-            "Backstage passes to a TAFKAL80ETC concert" => new BackstagePass(item.Quality, item.SellIn),
-            "Aged Brie" => new AgedBrie(item.Quality, item.SellIn),
-            _ => new Generic(item.Quality, item.SellIn)
+            "Backstage passes to a TAFKAL80ETC concert" => new BackstagePass(item.Quality),
+            "Aged Brie" => new AgedBrie(item.Quality),
+            _ => new Generic(item.Quality)
         };
     }
     
@@ -27,10 +27,10 @@ namespace GildedRoseKata
             for (var i = 0; i < Items.Count; i++)
             {
                 if (IsSulfuras(Items[i])) continue;
+                Items[i].SellIn -= 1;
                 var item = new GoodCategory().BuildFor(Items[i]);
-                item.Update();
+                item.Update(Items[i].SellIn);
                 Items[i].Quality = item.Quality;
-                Items[i].SellIn = item.SellIn;
             }
         }
         
