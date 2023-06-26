@@ -8,7 +8,7 @@ namespace GildedRoseKata
         public IGoodCategory BuildFor(Item item) => item.Name switch
         {
             "Backstage passes to a TAFKAL80ETC concert" => new BackstagePass(item.Quality),
-            "Aged Brie" => new AgedBrie(item.Quality),
+            "Aged Brie" => AgedBrie.Build(item.Quality, item.SellIn),
             _ => new Generic(item.Quality)
         };
     }
